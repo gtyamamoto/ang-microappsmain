@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from 'src/app/state.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { initialize,load } from 'src/app/htmlelements/actions/elements.actions.factory';
+import { load, unload } from 'src/app/htmlelements/actions/elements.actions.factory';
 
 @Component({
   selector: 'shell-sidenav',
@@ -12,38 +12,44 @@ import { initialize,load } from 'src/app/htmlelements/actions/elements.actions.f
 export class SidenavComponent implements OnInit {
 
   stateApp1: any;
-  $app1Ref : Observable<any>;
+  app2 = () => this.store.dispatch(load({ elementRef: 'app2', parent: '#content' }))
+  app1 = () => this.store.dispatch(load({ elementRef: 'app1', parent: '#content' }))
+  // tslint:disable-next-line: member-ordering
+  list = {
+    'app1': {
+      action: this.app1,
+      payload: this.app1
+    },
+    'app2': {
+      action: this.app2,
+      payload: this.app2
+    },
+  }
+  $app1Ref: Observable<any>;
 
-  constructor(private stateService: StateService,private store : Store<{}>) {
-    this.$app1Ref = store.select('apps','app1');
-    this.$app1Ref.subscribe(data=>{
+  constructor( private store: Store<{}>) {
+    this.$app1Ref = store.select('apps', 'app1');
+    this.$app1Ref.subscribe(data => {
       this.stateApp1 = data;
     })
-   }
+  }
 
   ngOnInit() {
   }
-  
-  load(name: string, parent: string = "#content"): void {
 
-    if (this.stateApp1.loaded)  { return; }
-    const content = document.querySelector(parent);
+  loadComponent(ref) {
+    console.log(ref);
+    this.list[ref].payload()
+    this.list[ref].payload = () => '';
 
-    const script = document.createElement('script');
-    script.src = this.stateApp1.path;
-    script.onerror = () => console.error(`error loading ${this.stateApp1.path}`);
-    content.appendChild(script);
-
-    const element: HTMLElement = document.createElement(this.stateApp1.element);
-    element.setAttribute('state', 'init');
-    content.appendChild(element);
-    this.store.dispatch(initialize({ elementRef: 'app1' }));
-    this.stateService.registerApp(element);
-
-  }
-  loadRecharge() {
-    this.load('app1');
-    this.store.dispatch(load({ elementRef: 'app1' }));
+    Object.keys(this.list)
+      .filter(cmp => cmp !== ref)
+      .map(cmp => {
+        this.store.dispatch(unload({ elementRef:cmp }))
+        this.list[cmp].payload = this.list[cmp].ref
+      });
+    //this.store.dispatch(load({ elementRef: 'app1',parent:'#content' }));
+    // this.store.dispatch(load({ elementRef: 'app1',parent:'#content' }));
     //this.config['app1'].loaded = true;
 
   }

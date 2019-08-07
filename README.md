@@ -2,6 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
 
+
+##Adicionar novo microapp
+ng new application <nome do app>
+
+ng add ngx-build-plus --project <nome do app>
+
+alterar package.json com um novo npm : "build:<nome do app>": "ng build --prod --single-bundle true --project <nome do app> --output-hashing none --vendor-chunk false --output-path dist/shell/<nome do app>",
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
