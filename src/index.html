@@ -10,5 +10,34 @@
 </head>
 <body>
   <shell-root></shell-root>
+
+<!-- Comment this out, *if* using differential loading or es2015 as a target in Angular 8+ -->
+<script src="./assets/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+
+ 
+  <!-- core-js for legacy browsers 
+        Consider only loading for IE
+  -->
+  <!-- <script src="./assets/core-js/core.js"></script> -->
+
+  <!-- 
+        Web Component polyfills
+  -->
+
+  <script src="/assets/webcomponentsjs/bundles/webcomponents-sd-ce.js"></script>
+
+
+  <!-- Zone.js 
+        Consider excluding zone.js when creating
+        custom Elements by using the noop zone.
+
+        If you load zone.js with an additional 
+        bundle, delete this line.
+  -->
+  <!-- <script src="./assets/zone.js/zone.js"></script>
+
+  <!-- TODO: Add further needed polyfills here ... -->
+
+ 
 </body>
 </html>
