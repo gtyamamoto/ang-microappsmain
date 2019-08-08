@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service'
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { initialize, load } from './htmlelements/actions/elements.actions.factory';
+import {  load } from './htmlelements/actions/elements.actions.factory';
 @Component({
   selector: 'shell-root',
   templateUrl: './app.component.html',

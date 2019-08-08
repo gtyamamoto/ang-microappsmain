@@ -1,5 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import {unload, load } from '../actions/elements.actions.factory';
+import {unload, load,reload } from '../actions/elements.actions.factory';
+
+
+//TODO : optimize registration of a new state that represents a new component
 export const initialState =
 {
   'header': {
@@ -33,7 +36,6 @@ export const htmlElementsReducer = createReducer(initialState,
     parentHtml.appendChild(script);
     const element: HTMLElement = document.createElement( state[elementRef].element);
     parentHtml.appendChild(element);
-
     return state;
   }),
   on(unload, (state, { elementRef }) => {
@@ -48,4 +50,15 @@ export const htmlElementsReducer = createReducer(initialState,
     
     return state;
   }),
+  on(reload,(state,{elementRef,parent})=>{
+    state[elementRef].loaded = true;
+    const parentHtml = document.querySelector(parent);
+    // const script = document.createElement('script');
+    // script.id = `script-for-${state[elementRef].element}`;
+    // script.src = state[elementRef].path;
+    // parentHtml.appendChild(script);
+    const element: HTMLElement = document.createElement( state[elementRef].element);
+    parentHtml.appendChild(element);
+    return state;
+  })
 );
