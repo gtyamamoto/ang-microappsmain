@@ -25,13 +25,13 @@ export class SidenavComponent implements OnInit {
       payload: this.app2
     },
   }
-  $app1Ref: Observable<any>;
+ // $app1Ref: Observable<any>;
 
   constructor( private store: Store<{}>) {
-    this.$app1Ref = store.select('apps', 'app1');
-    this.$app1Ref.subscribe(data => {
-      this.stateApp1 = data;
-    })
+    // this.$app1Ref = store.select('apps', 'app1');
+    // this.$app1Ref.subscribe(data => {
+    //   this.stateApp1 = data;
+    // })
   }
 
   ngOnInit() {
@@ -46,11 +46,8 @@ export class SidenavComponent implements OnInit {
       .filter(cmp => cmp !== ref)
       .map(cmp => {
         this.store.dispatch(unload({ elementRef:cmp }))
-        this.list[cmp].payload = this.list[cmp].ref
+        this.list[cmp].payload = this.list[cmp].action;
       });
-    //this.store.dispatch(load({ elementRef: 'app1',parent:'#content' }));
-    // this.store.dispatch(load({ elementRef: 'app1',parent:'#content' }));
-    //this.config['app1'].loaded = true;
 
   }
 
