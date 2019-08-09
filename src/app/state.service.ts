@@ -8,7 +8,7 @@ export class StateService {
 
     private state$ = new Subject();
     private apps: HTMLElement[] = [];
-
+    
     public registerApp(app: HTMLElement) {
         this.apps.push(app);
     }
