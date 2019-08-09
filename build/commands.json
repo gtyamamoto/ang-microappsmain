@@ -1,0 +1,10 @@
+{
+    "DEV": {
+        "command": "-d, --dev",
+        "description": "run all angular projects inside of ${workspace}/projects individually"
+    },
+    "BUILD": {
+        "command": "-b, --build",
+        "description": "build each project inside of ${workspace}/projects and build then in ${workspace}/dist"
+    }
+}
